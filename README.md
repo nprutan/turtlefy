@@ -12,3 +12,8 @@ Instead of reading all the API docs on how to paginate your
 orders, or customers, products etc, just use the recursive 
 function and boom, you got your list. Now do stuff.
 
+
+What's with the name? It's turtles all the way down!
+
+https://en.m.wikipedia.org/wiki/Turtles_all_the_way_down
+
