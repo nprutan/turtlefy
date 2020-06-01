@@ -14,19 +14,19 @@ def get_shopify_page_link(response):
                     return split
                 return uri.split(';')[0][2:-1]
 
-def get_all_resources_recursive(client, page_link,
-                                resource_type=None,
-                                resources=None):
+
+def get_all_resources_recursive(client, initial_uri,
+                                resources=None,
+                                resource_type=None):
     if not resources:
         resources = []
-    response = client.get(page_link)
-    if not resource_type:
-        raise ValueError('please provide a resource type')
+    response = client.get(initial_uri)
     resources.extend(response.json()[resource_type])
-    order_link = get_shopify_page_link(response)
-    if order_link:
-        get_all_resources_recursive(client, page_link, resources)
+    page_link = get_shopify_page_link(response)
+    if page_link:
+        get_all_resources_recursive(client, page_link, resources, resource_type)
     return resources
+
 
 def pass_verification_pipeline(funcs_to_apply, resource):
     for func in funcs_to_apply:
