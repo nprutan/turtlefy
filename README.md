@@ -13,7 +13,9 @@ orders, or customers, products etc, just use the recursive
 function and you've got your list. Now do stuff.
 
 EXAMPLE:
+
 from client import get_turtlefy_client
+
 from resources import get_all_resources_recursive
 
 client = get_turtlefy_client('https://base.myshopify.com', token='xxxx')
