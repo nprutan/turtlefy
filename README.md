@@ -14,8 +14,8 @@ function and you've got your list. Now do stuff.
 
 EXAMPLE:
 
+```python
 from client import get_turtlefy_client
-
 from resources import get_all_resources_recursive
 
 client = get_turtlefy_client('https://base.myshopify.com', token='xxxx')
@@ -25,6 +25,7 @@ order_uri = f'{client.api_path}/orders.json'
 orders = get_all_resources_recursive(client, order_uri, resource_type='orders')
 
 len(orders) >> 50
+```
 
 What's with the name? It's turtles all the way down!
 
