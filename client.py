@@ -2,6 +2,12 @@ from requests import Session
 
 
 class TurtlefyClient(Session):
+    '''
+    A Requests Session object with stored
+    Shopify credentials in the request headers.
+    Also a few conveniences for managing API paths.
+    '''
+
     def __init__(self, base_uri, token=None, api_version=None):
         super().__init__()
         self._base_uri = base_uri
@@ -11,11 +17,14 @@ class TurtlefyClient(Session):
     @property
     def base_uri(self):
         return (f'https://{self._base_uri}.myshopify.com'
-        if not '://' in self._base_uri else self._base_uri)
+                if not '://' in self._base_uri else self._base_uri)
 
     @property
     def api_path(self):
         return f'{self.base_uri}/admin/api/{self.api_version}'
+
+    def update_token(self, token):
+        self.headers['X-Shopify-Access-Token'] = token
 
 
 def get_turtlefy_client(base_uri, token, api_version='2020-04'):
