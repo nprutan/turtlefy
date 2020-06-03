@@ -1,4 +1,5 @@
 from requests import Session
+from hooks import handle_shopify_rate_limit
 
 
 class TurtlefyClient(Session):
@@ -13,6 +14,7 @@ class TurtlefyClient(Session):
         self._base_uri = base_uri
         self.api_version = api_version
         self.token = token
+        self.hooks['response'].append(handle_shopify_rate_limit)
 
     @property
     def base_uri(self):
