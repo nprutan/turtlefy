@@ -15,25 +15,25 @@ def get_shopify_page_link(response):
                 return uri.split(';')[0][2:-1]
 
 
-def get_all_resources_recursive(client, initial_uri,
-                                resources=None,
-                                resource_type=None):
+def get_all_resources(client, initial_uri,
+                      resources=None,
+                      resource_type=None):
     if not resources:
         resources = []
     response = client.get(initial_uri)
     resources.extend(response.json()[resource_type])
     page_link = get_shopify_page_link(response)
     if page_link:
-        get_all_resources_recursive(client, page_link, resources, resource_type)
+        get_all_resources(client, page_link, resources, resource_type)
     return resources
 
 
-def get_all_resources_generator(client, initial_uri, resource_type=None):
+def get_all_resources_iter(client, initial_uri, resource_type=None):
     response = client.get(initial_uri)
     yield response.json()[resource_type]
     page_link = get_shopify_page_link(response)
     if page_link:
-        yield from get_all_resources_generator(client, page_link, resource_type)
+        yield from get_all_resources_iter(client, page_link, resource_type)
 
 
 def pass_verification_pipeline(funcs_to_apply, resource):
