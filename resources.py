@@ -28,7 +28,7 @@ def get_all_resources_recursive(client, initial_uri,
     return resources
 
 
-def get_all_resources_gen(client, initial_uri, resource_type=None):
+def get_all_resources_generator(client, initial_uri, resource_type=None):
     response = client.get(initial_uri)
     yield response.json()[resource_type]
     page_link = get_shopify_page_link(response)
