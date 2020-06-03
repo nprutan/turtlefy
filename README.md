@@ -28,6 +28,7 @@ len(orders) >> 50
 ```
 
 Automatic Rate Limiting:
+
 Also, some little goodies include automatic rate limit detection.
 Shopify uses a "leaky bucket algorithm" to determine when to start
 rate limiting your requests.
