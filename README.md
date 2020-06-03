@@ -27,13 +27,18 @@ orders = get_all_resources(client, order_uri, resource_type='orders')
 len(orders) >> 50
 ```
 
+Automatic Rate Limiting:
 Also, some little goodies include automatic rate limit detection.
 Shopify uses a "leaky bucket algorithm" to determine when to start
-rate limiting your requests. Normally you would need to write
-some detection and backoff code in order to pull a bunch of
-resources without hitting limits. With the Turtlefy client you can
-just get all the resources and the client will handle the rate
-limit backoff.
+rate limiting your requests.
+
+https://shopify.dev/concepts/about-apis/rate-limits
+
+Normally you would need to write some detection and backoff code in order to
+pull a bunch of resources without hitting limits. With the Turtlefy client you
+can just get all the resources and the client will handle the rate limit
+backoff.
+
 NOTE: Currently this uses a very naive halving of the bucket leak
 count. This will be getting a better, and proper exponential backoff
 capability in the near future.
