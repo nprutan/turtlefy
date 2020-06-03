@@ -28,6 +28,14 @@ def get_all_resources_recursive(client, initial_uri,
     return resources
 
 
+def get_all_resources_gen(client, initial_uri, resource_type=None):
+    response = client.get(initial_uri)
+    yield response.json()[resource_type]
+    page_link = get_shopify_page_link(response)
+    if page_link:
+        yield from get_all_resources_gen(client, page_link, resource_type)
+
+
 def pass_verification_pipeline(funcs_to_apply, resource):
     for func in funcs_to_apply:
         if not func(resource):
