@@ -36,8 +36,3 @@ def get_all_resources_iter(client, initial_uri, resource_type=None):
         yield from get_all_resources_iter(client, page_link, resource_type)
 
 
-def pass_verification_pipeline(funcs_to_apply, resource):
-    for func in funcs_to_apply:
-        if not func(resource):
-            return False
-    return True
