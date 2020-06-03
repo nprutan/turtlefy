@@ -12,7 +12,7 @@ Instead of reading all the API docs on how to paginate your
 orders, or customers, products etc, just use the recursive
 function and you've got your list. Now do stuff.
 
-EXAMPLE:
+## Usage:
 
 ```python
 from client import get_turtlefy_client
@@ -27,7 +27,7 @@ orders = get_all_resources(client, order_uri, resource_type='orders')
 len(orders) >> 50
 ```
 
-Automatic Rate Limiting:
+## Automatic Rate Limiting:
 
 Also, some little goodies include automatic rate limit detection.
 Shopify uses a "leaky bucket algorithm" to determine when to start
