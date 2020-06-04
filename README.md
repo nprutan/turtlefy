@@ -27,6 +27,25 @@ orders = get_all_resources(client, order_uri, resource_type='orders')
 len(orders) >> 50
 ```
 
+In addition, you can use the get_all_resources_iter function like this:
+
+```python
+from resources import get_all_resources_iter
+
+# Note that using limit=1 is very inefficient, but you can
+# yield one resource at a time this way
+customer_uri = f'{client.api_path}/customers.json?limit=1'
+
+for customer in get_all_resources_iter(client, customer_uri, resource_type='customer'):
+    print(customer)
+
+order_uri = f'{client.api_path}/orders.json?limit=250'
+
+for orders in get_all_resources_iter(client, order_uri, resource_type='orders'):
+    print(f'Got {len(orders)} orders')
+
+```
+
 ## Automatic Rate Limiting:
 
 Also, some little goodies include automatic rate limit detection.
