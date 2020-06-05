@@ -1,5 +1,5 @@
 from requests import Session
-from hooks import handle_shopify_rate_limit
+from .hooks import handle_shopify_rate_limit
 
 
 class TurtlefyClient(Session):

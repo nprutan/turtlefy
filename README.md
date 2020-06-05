@@ -1,6 +1,6 @@
 # turtlefy
 ```
-              _,.---.---.---.--.._ 
+              _,.---.---.---.--.._
             _.-' `--.`---.`---'-. _,`--.._
            /`--._ .'.     `.     `,`-.`-._\
           ||   \  `.`---.__`__..-`. ,'`-._/
@@ -15,7 +15,7 @@
                 `._// ./`-._
                   `-._-_-_.-'
 ```
-                  
+
 A collection of Shopify utilities to make life easier.
 
 Sometimes you just want to get things done in a straightforward
@@ -31,8 +31,9 @@ function and you've got your list. Now do stuff.
 ## Usage:
 
 ```python
-from client import get_turtlefy_client
-from resources import get_all_resources
+import turtlefy
+from turtlefy.client import get_turtlefy_client
+from turtlefy.resources import get_all_resources
 
 client = get_turtlefy_client('https://base.myshopify.com', token='xxxx')
 
@@ -46,7 +47,8 @@ len(orders) >> 50
 In addition, you can use the get_all_resources_iter function like this:
 
 ```python
-from resources import get_all_resources_iter
+import turtlefy
+from turtlefy.resources import get_all_resources_iter
 
 # Note that using limit=1 is very inefficient, but you can
 # yield one resource at a time this way
