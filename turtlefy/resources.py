@@ -4,6 +4,30 @@ def cancel_order(client, order_number):
     return client.post(uri).json()
 
 
+def get_fulfillment_orders(client, order_number):
+    uri = f'{client.api_path}/orders/{order_number}/fulfillment_orders.json'
+    return client.get(uri).json()['fulfillment_orders']
+
+
+def get_fulfillment_order_id(fulfillment_orders, status=None):
+    if not status:
+        status = 'open'
+    for fulfillment in fulfillment_orders:
+        if fulfillment['status'] == status:
+            return fulfillment['id']
+
+
+def move_fulfillment_location(client, fulfillment_id, location_id):
+    uri = f'{client.api_path}/fulfillment_orders/{fulfillment_id}/move.json'
+
+    payload = {
+        "fulfillment_order": {
+            "new_location_id": location_id
+        }
+    }
+    return client.post(uri, json=payload)
+
+
 def get_shopify_page_link(response):
     link = response.headers.get('link')
     if link:
