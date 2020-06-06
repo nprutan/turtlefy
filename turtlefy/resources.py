@@ -58,5 +58,3 @@ def get_all_resources_iter(client, initial_uri, resource_type=None):
     page_link = get_shopify_page_link(response)
     if page_link:
         yield from get_all_resources_iter(client, page_link, resource_type)
-
-
