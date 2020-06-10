@@ -4,14 +4,17 @@ def get_webhooks(client):
 
 
 def update_webhooks_url(client, hooks, new_url):
+    results = []
     for hook in hooks:
+        url = f'{client.api_path}/webhooks/{hook["id"]}.json'
         payload = {
                 "webhook": {
                     "id": hook['id'],
                     "address": new_url
                     }
                 }
-        client.put(f'{client.api_path}/webhooks/{hook["id"]}.json', json=payload)
+        results.append(client.put(url, json=payload).json())
+    return results
 
 
 def cancel_order(client, order_number):
