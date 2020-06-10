@@ -1,4 +1,19 @@
 
+def get_webhooks(client):
+    return client.get(f'{client.api_path}/webhooks.json').json()['webhooks']
+
+
+def update_webhooks_url(client, hooks, new_url):
+    for hook in hooks:
+        payload = {
+                "webhook": {
+                    "id": hook['id'],
+                    "address": new_url
+                    }
+                }
+        client.put(f'{client.api_path}/webhooks/{hook["id"]}.json', json=payload)
+
+
 def cancel_order(client, order_number):
     uri = f'{client.api_path}/orders/{order_number}/cancel.json'
     return client.post(uri).json()
@@ -21,10 +36,10 @@ def move_fulfillment_location(client, fulfillment_id, location_id):
     uri = f'{client.api_path}/fulfillment_orders/{fulfillment_id}/move.json'
 
     payload = {
-        "fulfillment_order": {
-            "new_location_id": location_id
-        }
-    }
+            "fulfillment_order": {
+                "new_location_id": location_id
+                }
+            }
     return client.post(uri, json=payload)
 
 
@@ -39,9 +54,7 @@ def get_shopify_page_link(response):
                 return uri.split(';')[0][2:-1]
 
 
-def get_all_resources(client, initial_uri,
-                      resources=None,
-                      resource_type=None):
+def get_all_resources(client, initial_uri, resources=None, resource_type=None):
     if not resources:
         resources = []
     response = client.get(initial_uri)
