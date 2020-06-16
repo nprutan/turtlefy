@@ -31,7 +31,6 @@ function and you've got your list. Now do stuff.
 ## Usage:
 
 ```python
-import turtlefy
 from turtlefy.client import get_turtlefy_client
 from turtlefy.resources import get_all_resources
 
@@ -47,7 +46,6 @@ len(orders) >> 50
 In addition, you can use the get_all_resources_iter function like this:
 
 ```python
-import turtlefy
 from turtlefy.resources import get_all_resources_iter
 
 # Note that using limit=1 is very inefficient, but you can
