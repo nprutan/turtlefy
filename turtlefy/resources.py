@@ -17,9 +17,18 @@ def update_webhooks_url(client, hooks, new_url):
     return results
 
 
-def cancel_order(client, order_number):
+def get_order_risks(client, order_number):
+    uri = f'{client.api_path}/orders/{order_number}/risks.json'
+    return client.get(uri).json()['risks']
+
+
+def create_cancel_options():
+    pass
+
+
+def cancel_order(client, order_number, options=None):
     uri = f'{client.api_path}/orders/{order_number}/cancel.json'
-    return client.post(uri).json()
+    return client.post(uri, json=options).json()
 
 
 def get_fulfillment_orders(client, order_number):

@@ -29,7 +29,7 @@ class TurtlefyClient(Session):
         self.headers['X-Shopify-Access-Token'] = token
 
 
-def get_turtlefy_client(base_uri, token, api_version='2020-04'):
+def get_turtlefy_client(base_uri, token, api_version='2020-07'):
     turtle_client = TurtlefyClient(base_uri, token, api_version=api_version)
 
     if not turtle_client.token:
