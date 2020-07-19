@@ -22,7 +22,38 @@ def get_order_risks(client, order_number):
     return client.get(uri).json()['risks']
 
 
+_cancellation_settings = {
+    'cancel': {'cause_cancel': True, 'score': 1.0},
+    'investigate': {'cause_cancel': False, 'score': 5.0},
+    'accept': {'cause_cancel': False, 'score': 0.0}
+    }
+
+
+def _generate_risk_body(recommendation):
+    settings = _cancellation_settings.get(recommendation)
+    return {
+        'risk': {
+            'cause_cancel': settings['cause_cancel'],
+            'message': 'FraudHooks recommendation',
+            'recommendation': recommendation,
+            'display': True,
+            'source': 'External',
+            'score': settings['score']
+            }
+        }
+
+def create_order_risk(client, previous_risk, recommendation=None):
+    if not recommendation:
+        recommendation = 'cancel'
+    new_risk = _generate_risk_body(recommendation)
+    print(new_risk)
+    return client.post(f'{client.api_path}/orders/{previous_risk["order_id"]}/risks.json', json=new_risk)
+
+
 def create_cancel_options():
+    # TODO: only create restock options if there is an 
+    # location_id on the line_item
+    # https://shopify.dev/docs/admin-api/rest/reference/orders/refund?api[version]=2020-07
     pass
 
 
