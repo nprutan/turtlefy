@@ -46,7 +46,6 @@ def create_order_risk(client, previous_risk, recommendation=None):
     if not recommendation:
         recommendation = 'cancel'
     new_risk = _generate_risk_body(recommendation)
-    print(new_risk)
     return client.post(f'{client.api_path}/orders/{previous_risk["order_id"]}/risks.json', json=new_risk)
 
 
