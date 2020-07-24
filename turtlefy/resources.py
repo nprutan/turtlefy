@@ -18,6 +18,51 @@ def update_webhooks_url(client, hooks, new_url):
     return results
 
 
+def get_transactions(client, order_number):
+    uri = f'{client.api_path}/orders/{order_number}/transactions.json'
+    return client.get(uri).json()['transactions']
+
+
+def get_fulfillment_orders(client, order_number):
+    uri = f'{client.api_path}/orders/{order_number}/fulfillment_orders.json'
+    return client.get(uri).json()['fulfillment_orders']
+
+
+def _generate_refund_line_items(fulfillments, restock_type):
+    return [
+        {
+            'line_item_id': line['line_item_id'],
+            'quantity': line['quantity'],
+            'restock_type': restock_type,
+            'location_id': fulfillment['assigned_location_id']
+        } for fulfillment in fulfillments for line in fulfillment['line_items']
+    ]
+
+
+def _generate_refund_transactions(transactions):
+    return [
+        {
+            'parent_id': tx['parent_id'],
+            'amount': tx['amount'],
+            'kind': 'refund',
+            'gateway': tx['gateway']
+        } for tx in transactions if tx['parent_id']
+    ]
+
+
+def create_refund(transactions, fulfillments, restock_type='cancel'):
+    return {
+        "refund": {
+            "note": "FraudHooks Cancellation",
+            "shipping": {
+            "full_refund": True
+            },
+            "refund_line_items": _generate_refund_line_items(fulfillments, restock_type),
+            "transactions": _generate_refund_transactions(transactions)
+        }
+    }
+
+
 def get_order_risks(client, order_number):
     uri = f'{client.api_path}/orders/{order_number}/risks.json'
     return client.get(uri).json()['risks']
