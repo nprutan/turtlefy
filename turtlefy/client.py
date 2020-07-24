@@ -32,8 +32,11 @@ class TurtlefyClient(Session):
     def update_token(self, token):
         self.headers['X-Shopify-Access-Token'] = token
 
+    def update_gql_headers(self):
+        self.headers['Content-Type'] = 'application/graphql'
 
-def get_turtlefy_client(base_uri, token, api_version='2020-07'):
+
+def get_turtlefy_client(base_uri, token, api_version='2020-07', type=None):
     turtle_client = TurtlefyClient(base_uri, token, api_version=api_version)
 
     if not turtle_client.token:

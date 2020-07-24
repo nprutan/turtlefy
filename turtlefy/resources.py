@@ -1,3 +1,4 @@
+import json
 
 def get_webhooks(client):
     return client.get(f'{client.api_path}/webhooks.json').json()['webhooks']
@@ -117,7 +118,9 @@ def get_all_resources_iter(client, initial_uri, resource_type=None):
 
 
 def execute_gql_query(client, query, variables=None):
-    data = {'query': query,
-            'variables': variables}
+        data = {'query': query,
+                'variables': variables}
 
-    return client.get(f'{client.gql_endpoint}', json=data)
+        return client.get(f'{client.gql_endpoint}', data=json.dumps(data).encode('utf-8'))
+
+        
