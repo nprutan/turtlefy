@@ -117,10 +117,8 @@ def get_all_resources_iter(client, initial_uri, resource_type=None):
         yield from get_all_resources_iter(client, page_link, resource_type)
 
 
-def execute_gql_query(client, query, variables=None):
-        data = {'query': query,
-                'variables': variables}
-
-        return client.get(f'{client.gql_endpoint}', data=json.dumps(data).encode('utf-8'))
+def execute_gql_query(client, query):
+        client.update_gql_headers()
+        return client.post(f'{client.gql_endpoint}', data=query)
 
         
