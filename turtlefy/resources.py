@@ -96,16 +96,9 @@ def create_order_risk(client, previous_risk, recommendation=None):
     return client.post(f'{client.api_path}/orders/{previous_risk["order_id"]}/risks.json', json=new_risk)
 
 
-def create_cancel_options():
-    # TODO: only create restock options if there is an 
-    # location_id on the line_item
-    # https://shopify.dev/docs/admin-api/rest/reference/orders/refund?api[version]=2020-07
-    pass
-
-
-def cancel_order(client, order_number, options=None):
+def cancel_order(client, order_number, refund=None):
     uri = f'{client.api_path}/orders/{order_number}/cancel.json'
-    return client.post(uri, json=options).json()
+    return client.post(uri, json=refund).json()
 
 
 def get_fulfillment_orders(client, order_number):
