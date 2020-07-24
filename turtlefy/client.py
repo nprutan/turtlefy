@@ -25,6 +25,10 @@ class TurtlefyClient(Session):
     def api_path(self):
         return f'{self.base_uri}/admin/api/{self.api_version}'
 
+    @property
+    def gql_endpoint(self):
+        return f'{self.base_uri}/admin/api/{self.api_version}/graphql.json'
+
     def update_token(self, token):
         self.headers['X-Shopify-Access-Token'] = token
 
@@ -34,6 +38,9 @@ def get_turtlefy_client(base_uri, token, api_version='2020-07'):
 
     if not turtle_client.token:
         raise ValueError('Please provide token')
-    turtle_client.headers.update(
-        {'X-Shopify-Access-Token': f'{turtle_client.token}'})
+    turtle_client.headers.update({
+        'X-Shopify-Access-Token': f'{turtle_client.token}',
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    })
     return turtle_client

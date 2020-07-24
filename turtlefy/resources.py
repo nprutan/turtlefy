@@ -42,6 +42,7 @@ def _generate_risk_body(recommendation):
             }
         }
 
+
 def create_order_risk(client, previous_risk, recommendation=None):
     if not recommendation:
         recommendation = 'cancel'
@@ -113,3 +114,10 @@ def get_all_resources_iter(client, initial_uri, resource_type=None):
     page_link = get_shopify_page_link(response)
     if page_link:
         yield from get_all_resources_iter(client, page_link, resource_type)
+
+
+def execute_gql_query(client, query, variables=None):
+    data = {'query': query,
+            'variables': variables}
+
+    return client.get(f'{client.gql_endpoint}', json=data)
