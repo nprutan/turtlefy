@@ -1,4 +1,3 @@
-import json
 
 def get_webhooks(client):
     return client.get(f'{client.api_path}/webhooks.json').json()['webhooks']
@@ -96,9 +95,31 @@ def create_order_risk(client, previous_risk, recommendation=None):
     return client.post(f'{client.api_path}/orders/{previous_risk["order_id"]}/risks.json', json=new_risk)
 
 
-def cancel_order(client, order_number, refund=None):
+def get_cancel_options_defaults(transactions=None, fulfillments=None):
+    return {
+        'restock': True,
+        'notify': True,
+        'refund': True,
+        'transactions': transactions if transactions else {},
+        'fulfillments': fulfillments if fulfillments else {}
+    }
+
+
+def create_cancel_options(options):
+    refund = {}
+    if options['refund']:
+        restock_type = 'no_restock' if not options['restock'] else 'cancel'
+        refund = create_refund(options['transactions'], options['fulfillments'], restock_type=restock_type)
+    return {
+        **refund,
+        'email': options['notify'],
+        'reason': 'fraud'
+    }
+
+
+def cancel_order(client, order_number, options=None):
     uri = f'{client.api_path}/orders/{order_number}/cancel.json'
-    return client.post(uri, json=refund).json()
+    return client.post(uri, json=options).json()
 
 
 def get_fulfillment_orders(client, order_number):
