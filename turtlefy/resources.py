@@ -102,7 +102,7 @@ def create_cancel_options(options):
         refund = create_refund(options['transactions'], options['fulfillments'], restock_type=restock_type)
     return {
         **refund,
-        'email': options['notify'],
+        'email': options['notify_customer'],
         'reason': 'fraud'
     }
 
