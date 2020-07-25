@@ -95,16 +95,6 @@ def create_order_risk(client, previous_risk, recommendation=None):
     return client.post(f'{client.api_path}/orders/{previous_risk["order_id"]}/risks.json', json=new_risk)
 
 
-def get_cancel_options_defaults(transactions=None, fulfillments=None):
-    return {
-        'restock': True,
-        'notify': True,
-        'refund': True,
-        'transactions': transactions if transactions else {},
-        'fulfillments': fulfillments if fulfillments else {}
-    }
-
-
 def create_cancel_options(options):
     refund = {}
     if options['refund']:
