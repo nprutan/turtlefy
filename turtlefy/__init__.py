@@ -1,4 +1,4 @@
 # __init__.py
 
 # Version of the turtlefy package
-__version__ = "0.8.2"
+__version__ = "0.8.3"
