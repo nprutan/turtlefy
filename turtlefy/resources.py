@@ -69,7 +69,7 @@ def get_order_risks(client, order_number):
 
 _cancellation_settings = {
     'cancel': {'cause_cancel': True, 'score': 1.0},
-    'investigate': {'cause_cancel': False, 'score': 5.0},
+    'investigate': {'cause_cancel': False, 'score': 0.5},
     'accept': {'cause_cancel': False, 'score': 0.0}
     }
 
