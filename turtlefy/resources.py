@@ -74,12 +74,14 @@ _cancellation_settings = {
     }
 
 
-def _generate_risk_body(recommendation):
+def _generate_risk_body(recommendation, message):
     settings = _cancellation_settings.get(recommendation)
+    if not message:
+        message = 'Order determined to be high risk'
     return {
         'risk': {
             'cause_cancel': settings['cause_cancel'],
-            'message': 'FraudHooks recommendation',
+            'message': message,
             'recommendation': recommendation,
             'display': True,
             'source': 'External',
@@ -88,10 +90,10 @@ def _generate_risk_body(recommendation):
         }
 
 
-def create_order_risk(client, previous_risk, recommendation=None):
+def create_order_risk(client, previous_risk, recommendation=None, message=None):
     if not recommendation:
         recommendation = 'cancel'
-    new_risk = _generate_risk_body(recommendation)
+    new_risk = _generate_risk_body(recommendation, message)
     return client.post(f'{client.api_path}/orders/{previous_risk["order_id"]}/risks.json', json=new_risk)
 
 
