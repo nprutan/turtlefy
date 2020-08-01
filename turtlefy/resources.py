@@ -1,4 +1,33 @@
 
+def extract_tags(tags):
+    return [tag.strip().lower() for tag in tags.split(',')]
+
+
+def append_tags(tags, new_tag):
+    if tags:
+        split_tags = tags.split(',')
+        split_tags.append(f' {new_tag}')
+        return ','.join(split_tags)
+    return new_tag
+
+
+def tag_customer(client, customer, new_tag):
+    customer_id = int(customer['id'])
+    updated_tags = append_tags(customer['tags'], new_tag)
+    tag_data = {
+        "customer": {
+            "id": customer_id,
+            "tags": updated_tags
+        }
+    }
+    url = f'{client.api_path}/customers/{customer_id}.json'
+    return client.put(url, json=tag_data).status_code
+
+
+def get_customer_by_id(client, customer_id):
+    return client.get(f'{client.api_path}/customers/{customer_id}.json').json()['customer']
+
+
 def get_webhooks(client):
     return client.get(f'{client.api_path}/webhooks.json').json()['webhooks']
 
