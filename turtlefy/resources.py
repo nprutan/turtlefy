@@ -28,6 +28,10 @@ def get_customer_by_id(client, customer_id):
     return client.get(f'{client.api_path}/customers/{customer_id}.json').json()['customer']
 
 
+def get_order_by_id(client, order_id):
+    return client.get(f'{client.api_path}/orders/{order_id}.json').json()['order']
+
+
 def get_webhooks(client):
     return client.get(f'{client.api_path}/webhooks.json').json()['webhooks']
 
