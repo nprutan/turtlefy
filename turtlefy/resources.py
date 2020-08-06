@@ -12,7 +12,7 @@ def append_tags(tags, new_tag):
 
 
 def tag_resource(client, resource, new_tag, resource_type=None):
-    resource_id = int([resource_type]['id'])
+    resource_id = int(resource['id'])
     updated_tags = append_tags(resource['tags'], new_tag)
     tag_data = {
         resource_type: {
@@ -20,8 +20,8 @@ def tag_resource(client, resource, new_tag, resource_type=None):
             "tags": updated_tags
         }
     }
-    url = f'{client.api_path}/{resource_type}/{resource_id}.json'
-    return client.put(url, json=tag_data).status_code
+    url = f'{client.api_path}/{resource_type}s/{resource_id}.json'
+    return client.put(url, json=tag_data).json()[resource_type]
 
 
 def get_customer_by_id(client, customer_id):
