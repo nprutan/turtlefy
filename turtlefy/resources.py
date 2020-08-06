@@ -11,16 +11,16 @@ def append_tags(tags, new_tag):
     return new_tag
 
 
-def tag_customer(client, customer, new_tag):
-    customer_id = int(customer['id'])
-    updated_tags = append_tags(customer['tags'], new_tag)
+def tag_resource(client, resource, new_tag, resource_type=None):
+    resource_id = int([resource_type]['id'])
+    updated_tags = append_tags(resource['tags'], new_tag)
     tag_data = {
-        "customer": {
-            "id": customer_id,
+        resource_type: {
+            "id": resource_id,
             "tags": updated_tags
         }
     }
-    url = f'{client.api_path}/customers/{customer_id}.json'
+    url = f'{client.api_path}/{resource_type}/{resource_id}.json'
     return client.put(url, json=tag_data).status_code
 
 
