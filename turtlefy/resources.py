@@ -32,6 +32,10 @@ def get_order_by_id(client, order_id):
     return client.get(f'{client.api_path}/orders/{order_id}.json').json()['order']
 
 
+def get_token_access_status(client):
+    return client.get(f'{client.base_uri}/admin/oauth/access_scopes.json').status_code
+
+
 def get_webhooks(client):
     return client.get(f'{client.api_path}/webhooks.json').json()['webhooks']
 
