@@ -69,16 +69,18 @@ def get_fulfillments(client, order_number):
     return client.get(uri).json()['fulfillments']
 
 
-def create_tracking_options(fulfillment_id, tracking_number, company, notify=False):
+def create_tracking_options(fulfillment_id, tracking_number, 
+                            company=None, message=None, url=None, 
+                            notify=False):
     return {
         "fulfillment": {
-            "message": "The package was shipped this morning.",
+            "message": message,
             "notify_customer": notify,
             "tracking_info": {
-            "number": tracking_number,
-            "url": "https://www.my-shipping-company.com",
-            "company": company
-            },
+                "number": tracking_number,
+                "company": company,
+                "url": url
+                },
             "line_items_by_fulfillment_order": [
                 {
                     "fulfillment_order_id": fulfillment_id
@@ -89,8 +91,8 @@ def create_tracking_options(fulfillment_id, tracking_number, company, notify=Fal
 
 
 def create_fulfillment_with_tracking(client, options):
-    uri = f'{client.api_path}/fulfillments/{options["fulfillment_id"]}/update_tracking.json'
-    return client.post(uri, data=options).json()
+    uri = f'{client.api_path}/fulfillments.json'
+    return client.post(uri, json=options).json()
 
 
 def _generate_refund_line_items(fulfillments, restock_type):
