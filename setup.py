@@ -18,7 +18,7 @@ URL = 'https://github.com/nprutan/turtlefy'
 EMAIL = 'nathan@composedcloud.com'
 AUTHOR = 'Nate Rutan'
 REQUIRES_PYTHON = '>=3.7.0'
-VERSION = '0.8.11'
+VERSION = '0.8.12'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
