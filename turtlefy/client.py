@@ -36,7 +36,7 @@ class TurtlefyClient(Session):
         self.headers['Content-Type'] = 'application/graphql'
 
 
-def get_turtlefy_client(base_uri, token, api_version='2020-07'):
+def get_turtlefy_client(base_uri, token, api_version='2020-10'):
     turtle_client = TurtlefyClient(base_uri, token, api_version=api_version)
 
     if not turtle_client.token:
